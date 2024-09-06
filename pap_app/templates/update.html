@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Data</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Pure CSS for additional styling */
+    .form-container {
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: inline-block;
+      width: 120px;
+      text-align: right;
+      margin-right: 1rem;
+    }
+    .button-container {
+      text-align: center;
+    }
+    .button-container button,
+    .button-container a {
+      margin: 0.5rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-6 text-center text-blue-500">Update Entry</h1>
+
+    <div class="form-container max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <!-- Display the current picture if it exists -->
+        {% if entry.picture %}
+            <div class="mb-4 text-center">
+                <img src="{{ entry.picture.url }}" alt="{{ entry.first_name }} {{ entry.second_name }}" class="mx-auto w-32 h-32 object-cover rounded-full shadow-lg">
+            </div>
+        {% endif %}
+    
+        <!-- Begin the form -->
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+    
+            <!-- Render the other form fields normally -->
+            {{ form.first_name.label_tag }} {{ form.first_name }}
+            {{ form.second_name.label_tag }} {{ form.second_name }}
+            {{ form.age.label_tag }} {{ form.age }}
+            {{ form.dob.label_tag }} {{ form.dob }}
+            {{ form.id_number.label_tag }} {{ form.id_number }}
+            {{ form.email.label_tag }} {{ form.email }}
+            {{ form.phone_number.label_tag }} {{ form.phone_number }}
+            {{ form.address.label_tag }} {{ form.address }}
+            {{ form.location.label_tag }} {{ form.location }}
+    
+            <!-- Display the input for uploading a new image -->
+            <div>
+                <label for="picture" class="block text-sm font-medium text-gray-700">Upload a new picture:</label>
+                <input type="file" name="picture" id="picture" class="mt-1 block w-full">
+            </div>
+    
+            <!-- Submit and cancel buttons -->
+            <div class="button-container">
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Update</button>
+                <a href="{% url 'retrieve_data' %}" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">Cancel</a>
+            </div>
+        </form>
+    </div>
+    
+  </div>
+</body>
+</html>
